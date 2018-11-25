@@ -1,2 +1,0 @@
-allow webview_zygote oem_vendor_props:file { open read };
-
