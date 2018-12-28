@@ -14,5 +14,4 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/omni_nx606j.mk
-
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/lineage_nx606j.mk

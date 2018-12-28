@@ -52,11 +52,9 @@ lib/com.qualcomm.qti.ant@1.0.so
 lib/com.qualcomm.qti.bluetooth_audio@1.0.so
 lib/com.qualcomm.qti.dpm.api@1.0.so
 lib/com.qualcomm.qti.imscmservice@1.0.so
-lib/com.qualcomm.qti.imscmservice@1.1.so
 lib/com.qualcomm.qti.wifidisplayhal@1.0.so
 lib/hw/sensors.sdm845.so
 lib/libimscamera_jni.so
-lib/lib-imscamera.so
 lib/libimsmedia_jni.so
 lib/lib-imsvideocodec.so
 lib/lib-imsvtextutils.so

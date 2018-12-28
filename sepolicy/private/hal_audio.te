@@ -1,4 +1,0 @@
-allow hal_audio boottime_prop:property_service set;
-allow hal_audio boottime_prop:file { open read };
-
-

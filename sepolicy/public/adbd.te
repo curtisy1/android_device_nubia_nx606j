@@ -1,2 +1,0 @@
-allow adbd oemfs:dir search;
-

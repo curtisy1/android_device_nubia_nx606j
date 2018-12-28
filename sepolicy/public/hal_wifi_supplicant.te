@@ -1,3 +1,0 @@
-allow hal_wifi_supplicant boottime_prop:file { read open getattr };
-
-

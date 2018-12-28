@@ -14,6 +14,6 @@
 # limitations under the License.
 #
 
-add_lunch_combo omni_nx606j-eng
-add_lunch_combo omni_nx606j-user
-add_lunch_combo omni_nx606j-userdebug
+add_lunch_combo lineage_nx606j-eng
+add_lunch_combo lineage_nx606j-user
+add_lunch_combo lineage_nx606j-userdebug
