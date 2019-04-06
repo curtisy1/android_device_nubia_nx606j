@@ -51,9 +51,9 @@ TARGET_KERNEL_ARCH := arm64
 #TARGET_PREBUILT_KERNEL := $(COMMON_PATH)/kernel
 TARGET_KERNEL_CONFIG := lineage_nx606j_defconfig
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-  # TARGET_KERNEL_CLANG_COMPILE := true
+  #TARGET_KERNEL_CLANG_COMPILE := true
   TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-  TARGET_KERNEL_SOURCE := kernel/nubia/nx606j_gcc
+  TARGET_KERNEL_SOURCE := kernel/nubia/nx606j_gcc_kernel-upstream
 endif
 
 # Platform
