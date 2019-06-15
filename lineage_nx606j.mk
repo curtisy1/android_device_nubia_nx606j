@@ -1,15 +1,21 @@
 #
 # Copyright (C) 2018 The LineageOS Project
 #
-# SPDX-License-Identifier: Apache-2.0
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/nubia/nx606j/nx606j-vendor.mk)
+$(call inherit-product, vendor/nubia/nx606j/nx606j-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -17,19 +23,41 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage
 
 # Properties
--include $(LOCAL_PATH)/common-props.mk
+-include $(LOCAL_PATH)/system_prop.mk
 
-# AID/fs configs
+# A/B
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    system \
+    vbmeta
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
+
 PRODUCT_PACKAGES += \
-    fs_config_files
-	
+    otapreopt_script
+
+# ANT+
+PRODUCT_PACKAGES += \
+    AntHalService
+
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    tinymix
+    libaacwrapper
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml
+
+# Boot control
+PRODUCT_PACKAGES_DEBUG += \
+    bootctl
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -37,28 +65,34 @@ PRODUCT_PACKAGES += \
 
 # Common init scripts
 PRODUCT_PACKAGES += \
-    init.qcom.rc
+    init.qcom.rc \
+    init.recovery.qcom.rc
 
 # Display
 PRODUCT_PACKAGES += \
-    libvulkan
+    libvulkan \
+    vendor.display.config@1.0
 
-# HIDL
+# Doze
 PRODUCT_PACKAGES += \
-    android.hidl.base@1.0 \
-    android.hidl.manager@1.0
+    NubiaDoze
 
-# IMS
-PRODUCT_PACKAGES += \
-    ims-ext-common
+# HotwordEnrollement app permissions
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-hotword.xml:system/etc/permissions/privapp-permissions-hotword.xml
 
 # Input
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/sdm845-tavil-snd-card_Button_Jack.kl:system/usr/keylayout/sdm845-tavil-snd-card_Button_Jack.kl
+    $(LOCAL_PATH)/idc/gf_input.idc:system/usr/idc/gf_input.idc \
+    $(LOCAL_PATH)/keylayout/gf_input.kl:system/usr/keylayout/gf_input.kl
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.xiaomi_sdm845
+    android.hardware.light@2.0-service.nubia_sdm845
+
+# LiveDisplay
+PRODUCT_PACKAGES += \
+    lineage.livedisplay@2.0-service.nubia_sdm845
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -68,21 +102,19 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
 
+# NFC
+PRODUCT_PACKAGES += \
+    android.hardware.nfc@1.0:64 \
+    android.hardware.nfc@1.1:64 \
+    android.hardware.secure_element@1.0:64 \
+    com.android.nfc_extras \
+    Tag \
+    vendor.nxp.nxpese@1.0:64 \
+    vendor.nxp.nxpnfc@1.0:64
+
 # Power
 PRODUCT_PACKAGES += \
     power.qcom:64
-
-# QTI
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml \
-    $(LOCAL_PATH)/permissions/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
-
-# RCS
-PRODUCT_PACKAGES += \
-    rcs_service_aidl \
-    rcs_service_aidl.xml \
-    rcs_service_api \
-    rcs_service_api.xml
 
 # Telephony
 PRODUCT_PACKAGES += \
@@ -91,22 +123,34 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-# TextClassifier
+# Touch
 PRODUCT_PACKAGES += \
-    textclassifier.bundle1
+    lineage.touch@1.0-service.nubia_sdm845
 
-# VNDK-SP
+# Trust HAL
 PRODUCT_PACKAGES += \
-vndk-sp
+    lineage.trust@1.0-service.nubia_sdm845
+
+PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+    libcutils \
+    libgptutils \
+    libz \
+
+# WiFi Display
+PRODUCT_PACKAGES += \
+    libnl
+
+PRODUCT_BOOT_JARS += \
+    WfdCommon
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_NAME := lineage_nx606j
-PRODUCT_DEVICE := nx606j
-PRODUCT_BRAND := nubia
-PRODUCT_MODEL := NX606J
-PRODUCT_MANUFACTURER := nubia
+# PRODUCT_NAME := lineage_nx606j
+# PRODUCT_DEVICE := nx606j
+# PRODUCT_BRAND := nubia
+# PRODUCT_MODEL := NX606J
+# PRODUCT_MANUFACTURER := nubia
     
 
-TARGET_VENDOR_PRODUCT_NAME := NX606J
-TARGET_VENDOR_DEVICE_NAME := NX606J
-PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=NX606J PRODUCT_NAME=NX606J
+# TARGET_VENDOR_PRODUCT_NAME := NX606J
+# TARGET_VENDOR_DEVICE_NAME := NX606J
+# PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=NX606J PRODUCT_NAME=NX606J

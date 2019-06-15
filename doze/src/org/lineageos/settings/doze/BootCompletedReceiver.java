@@ -25,14 +25,11 @@ import android.util.Log;
 public class BootCompletedReceiver extends BroadcastReceiver {
 
     private static final boolean DEBUG = false;
-    private static final String TAG = "XiaomiDoze";
+    private static final String TAG = "NubiaDoze";
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (Utils.isDozeEnabled(context) && Utils.sensorsEnabled(context)) {
-            if (DEBUG) Log.d(TAG, "Starting service");
-            Utils.startService(context);
-        }
+        if (DEBUG) Log.d(TAG, "Received boot completed intent");
+        Utils.checkDozeService(context);
     }
-
 }
