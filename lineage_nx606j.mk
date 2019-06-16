@@ -14,6 +14,10 @@
 # limitations under the License.
 #
 
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/nubia/nx606j/nx606j-vendor.mk)
 
@@ -144,13 +148,13 @@ PRODUCT_BOOT_JARS += \
     WfdCommon
 
 ## Device identifier. This must come after all inclusions
-# PRODUCT_NAME := lineage_nx606j
-# PRODUCT_DEVICE := nx606j
-# PRODUCT_BRAND := nubia
-# PRODUCT_MODEL := NX606J
-# PRODUCT_MANUFACTURER := nubia
+PRODUCT_NAME := lineage_nx606j
+PRODUCT_DEVICE := nx606j
+PRODUCT_BRAND := nubia
+PRODUCT_MODEL := NX606J
+PRODUCT_MANUFACTURER := nubia
     
 
-# TARGET_VENDOR_PRODUCT_NAME := NX606J
-# TARGET_VENDOR_DEVICE_NAME := NX606J
-# PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=NX606J PRODUCT_NAME=NX606J
+TARGET_VENDOR_PRODUCT_NAME := NX606J
+TARGET_VENDOR_DEVICE_NAME := NX606J
+PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=NX606J PRODUCT_NAME=NX606J
