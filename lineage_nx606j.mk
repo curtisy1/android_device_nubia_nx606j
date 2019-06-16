@@ -19,7 +19,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product, vendor/nubia/nx606j/nx606j-vendor.mk)
+$(call inherit-product, vendor/nubia/android_vendor_nubia_nx606j/nx606j-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
