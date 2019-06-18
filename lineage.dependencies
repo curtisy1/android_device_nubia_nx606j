@@ -2,7 +2,7 @@
   {
     "remote":"github",
     "repository": "curtisy1/NX606J_O_kernel/",
-    "target_path": "kernel/nubia/android_kernel_nubia_nx606j"
+    "target_path": "kernel/nubia/nx606j"
   },
   {
     "repository": "android_packages_resources_devicesettings",

@@ -16,7 +16,7 @@
 
 BOARD_VENDOR := nubia
 
-COMMON_PATH := device/nubia/android_device_nubia_nx606j
+COMMON_PATH := device/nubia/nx606j
 
 TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
 
@@ -53,7 +53,7 @@ TARGET_KERNEL_CONFIG := lineage_nx606j_defconfig
 ifeq ($(TARGET_PREBUILT_KERNEL),)
   TARGET_KERNEL_CLANG_COMPILE := true
 endif
-TARGET_KERNEL_SOURCE := kernel/nubia/android_kernel_nubia_nx606j
+TARGET_KERNEL_SOURCE := kernel/nubia/nx606j
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # Platform
@@ -71,7 +71,7 @@ BOARD_VNDK_VERSION := current
 USE_XML_AUDIO_POLICY_CONF := 1
 
 # Bluetooth
-# BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth/include
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth/include
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -138,4 +138,4 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 # Inherit from the proprietary version
--include vendor/nubia/android_vendor_nubia_nx606j/BoardConfigVendor.mk
+-include vendor/nubia/nx606j/BoardConfigVendor.mk
