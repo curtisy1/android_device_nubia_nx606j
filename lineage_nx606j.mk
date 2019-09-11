@@ -14,10 +14,6 @@
 # limitations under the License.
 #
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/nubia/nx606j/nx606j-vendor.mk)
 
@@ -28,6 +24,24 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Properties
 -include $(LOCAL_PATH)/system_prop.mk
+
+# A/B
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    system \
+    vbmeta
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
+
+PRODUCT_PACKAGES += \
+    otapreopt_script
 
 # ANT+
 PRODUCT_PACKAGES += \
@@ -56,12 +70,14 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
+    libdisplayconfig \
+    libqdMetaData.system \
     libvulkan \
     vendor.display.config@1.0
 
 # Doze
 PRODUCT_PACKAGES += \
-    NubiaDoze
+NubiaDoze
 
 # HotwordEnrollement app permissions
 PRODUCT_COPY_FILES += \
@@ -113,11 +129,17 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     lineage.touch@1.0-service.nubia_sdm845
 
+# tri-state-key
+PRODUCT_PACKAGES += \
+    KeyHandler \
+    tri-state-key_daemon
+
 # Trust HAL
 PRODUCT_PACKAGES += \
-    lineage.trust@1.0-service.nubia_sdm845
+    lineage.trust@1.0-service
 
 PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+    bootctrl.sdm845 \
     libcutils \
     libgptutils \
     libz \
@@ -128,6 +150,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-wfd.xml:system/etc/permissions/privapp-permissions-wfd.xml
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_NAME := lineage_nx606j
